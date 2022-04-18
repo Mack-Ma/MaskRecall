@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My experiment</title>
+
+        <!-- load relevant libraries -->
+        <script src="libraries/jspsych.js"></script>
+        <script src="libraries/jquery-min.js" type="text/javascript"> </script>
+        <script src="libraries/Snap.svg-0.5.1/dist/snap.svg.js"></script>
+
+        <!-- load the jspsych custom plugins.   -->
+        <script src="plugins/jspsych-continuous-report.js"></script>
+        <script src="plugins/jspsych-maskrecall.js"></script>
+        <script src="plugins/jspsych-snap-keyboard-response.js"></script>
+
+        <!-- load other jspsych plugins used in this demo.   -->
+        <script src="plugins/jspsych-html-keyboard-response.js"></script>
+        <script src="plugins/jspsych-instructions.js"></script>
+
+        <!-- load colors for color wheel.   -->
+        <script src="colors.js"></script>
+
+        <!-- load css files.   -->
+
+        <link rel="stylesheet" href="css/jspsych.css" type="text/css" />
+        <link rel="stylesheet" href="css/custom.css" type="text/css" />
+
+        <!-- load main task -->
+        <script src="task-main.js"></script>
+
+       </head>
+
+    <body>
+      <link href="https://bobodeligong.github.io/DoubleRecall/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+      <link href="https://bobodeligong.github.io/DoubleRecall/css/custom.css" rel="stylesheet" type="text/css"></link>
+      <div>
+        <span style="font-size: 24px;">
+          <br><br>
+          If you are seeing this message for <span style="color: rgb(255, 0, 0);"><b>more than 5 minutes</b></span>,<br>
+          please screen-capture this screen and send the image to lyang147@ucr.edu
+          <br><br>
+          <span style="font-size: 28px;">We are very sorry for the inconvenience.</span>
+        </span>
+      </div>
+
+      <style>
+        #display_stage_background {
+          width: 100vw;
+          background-color: rgb(50, 50, 50);
+          z-index: -1;
+          color: white
+        }
+
+        #display_stage {
+          position: fixed;
+          left: 1vw;
+          top: 1vh;
+          height: 98vh;
+          width: 98vw;
+          background-color: rgb(50, 50, 50);
+          box-shadow: 0px 0px 0px #999;
+          border-radius: 0px;
+          z-index: 0;
+          overflow-y: hidden;
+          overflow-x: hidden;
+          color: white
+        }
+      </style>
+      <div id='display_stage_background'></div>
+      <div id='display_stage'></div>
+    </body>
+</html>
+
+
+<script>
+
+
+
+	jsPsych.init({
+		timeline: timeline,
+		preload_images: all_images, // this speeds things up.
+	  show_preload_progress_bar: false,
+    display_element: 'display_stage',
+		on_finish: function() {
+       jsPsych.data.displayData(); // if you want to display the data at the end for debugging purposes.
+    }
+	});
+</script>
