@@ -6,13 +6,13 @@
  **/
 
 
-jsPsych.plugins["snap-keyboard-response"] = (function() {
+jsPsych.plugins["mask-keyboard-response"] = (function() {
 
   var plugin = {};
 
   plugin.info = {
-    name: 'snap-keyboard-response',
-    description: 'Uses Snap.io to present images.',
+    name: 'mask-keyboard-response',
+    description: 'backward_mask',
     parameters: {
       stimulus: {
         type: jsPsych.plugins.parameterType.HTML_STRING,
@@ -86,7 +86,7 @@ jsPsych.plugins["snap-keyboard-response"] = (function() {
 
     /*
     rgbCol = colors.colors[trial.colIndex];
-    var currHexColor = Snap.rgb(rgbCol[0], rgbCol[1], rgbCol[2]);
+    var currHexColor = .rgb(rgbCol[0], rgbCol[1], rgbCol[2]);
     */
     var colorList = [];
     for (haha = 0; haha < nsample; haha++) {
@@ -118,7 +118,7 @@ jsPsych.plugins["snap-keyboard-response"] = (function() {
      var sampleLocationY=[];
      var sampleLocationX=[];
      var radiusha=200;
-     var edgeSquare=100;
+     var edgeSquare=110;
 /*     var minAngleDist=360/8;*/
   /*    for (let i = 0; i < nsample; i++) {
         var sampleLocationAngle = getRndInteger(1, 359);
@@ -129,11 +129,56 @@ jsPsych.plugins["snap-keyboard-response"] = (function() {
         sampleLocationY[i] = trial.allLocY[i];
         sampleLocationX[i] = trial.allLocX[i];
       };
-      var colorSquareAll = [];
+
+      var colorIDList=Array(360).fill().map((element, index) => index+0)
+
+      function getRandomSubarray(arr, size) {
+          var shuffled = arr.slice(0), i = arr.length, temp, index;
+          while (i--) {
+              index = Math.floor((i + 1) * Math.random());
+              temp = shuffled[index];
+              shuffled[index] = shuffled[i];
+              shuffled[i] = temp;
+          }
+          return shuffled.slice(0, size);
+      }
+
+      function get4Angle(ang){
+        var ang_all=[];
+          for (let ii=0; ii<4; ii++) {
+            ang_all[ii]=ang+90*ii+Math.floor(Math.random()*20)-10;
+            if (ang_all[ii]>359) {ang_all[ii]=ang_all[ii]-360;}
+          }
+        return ang_all
+      }
+
+      function shuffle(array) {
+        let currentIndex = array.length,  randomIndex;
+        // While there remain elements to shuffle.
+        while (currentIndex != 0) {
+          // Pick a remaining element.
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex--;
+          // And swap it with the current element.
+          [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+        }
+        return array;
+      }
+
+
+      var maskAll = [];
+      var sampleMaskColor=[];
       for (let i = 0; i < nsample; i++) {
-        colorSquareAll[i] = paper.rect(centerXSVG + sampleLocationX[i] - edgeSquare/2, centerYSVG + sampleLocationY[i] - edgeSquare/2, edgeSquare, edgeSquare).attr({
-          fill: colorList[i]
-        });
+        /*const curRGBsample = getRandomSubarray(colorIDList, 4)*/
+        const curRGBfirst=Math.floor(Math.random()*359)
+        const curRGBsample=get4Angle(curRGBfirst);
+        for (let j = 0; j < 4; j++) {
+          sampleMaskColor = colors.colors[curRGBsample[j]];
+          maskAll[j] = paper.rect(centerXSVG + sampleLocationX[i] - edgeSquare/2 + Math.floor(j%2)*50, centerYSVG + sampleLocationY[i] - edgeSquare/2 + Math.floor(j/2)*50, edgeSquare/2, edgeSquare/2).attr({
+            fill: Snap.rgb(sampleMaskColor[0], sampleMaskColor[1], sampleMaskColor[2])
+          });
+        }
       };
     /*// create the left rectangular
     var colorSquareLeft = paper.rect(centerXSVG-150, centerYSVG-50, 100, 100).attr({

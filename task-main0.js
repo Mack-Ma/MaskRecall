@@ -1,6 +1,5 @@
 var trialNumberPrac = 1;
 var trialNumber = 25;
-var nsample = 3;
 
 
 // define the site that hosts stimuli images
@@ -159,145 +158,17 @@ timeline.push(instructions_end);*/
       for (j = 0; j<trialNumber; j++){
       colIndex[j]=[Math.floor(Math.random()*360), Math.floor(Math.random()*360)]
       };*/
+      var stimuliOrder = {
+        image:[1,2,3,4]
+      }
 
-      function getMinAngleDist(haha) {
-        let minDist=180;
-        let rawDist
-        for (let i=0; i<haha.length-1; i++) {
-          for (let j=i+1; j<haha.length; j++) {
-            rawDist=Math.abs(haha[i]-haha[j]);
-            if (rawDist > 180) {
-              rawDist=rawDist-180;
-            }
-            if (rawDist<minDist) {
-                minDist=rawDist;
-            }
+
+      var stimuliIndex =[];
+        for (let i = 0; i < trialNumber; i++) {
+          stimuliIndex[i] = {
+            stimulus: stimuliOrder.image[i],
           }
         }
-        return minDist
-      }
-      function getRndInteger(min, max) { // this function sets a random number between min and max, inclusive
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-      }
-
-      var minColDist=20;
-      var currColDist=0;
-      var colIndex=[];
-            for (let j = 0; j<trialNumber; j++){
-              var colID=[];
-              currColDist=0;
-              while (currColDist < minColDist) {
-                for (let nS = 0; nS<nsample; nS++){
-                  colID[nS]=Math.floor(Math.random()*359);
-                }
-                currColDist=getMinAngleDist(colID)
-              }
-              colIndex[j]=colID;
-            };
-
-// randomize probe locations
-var probLocIndex = [];
-      for (let k = 0; k<trialNumber; k++){
-        probLocIndex[k] = Math.floor(Math.random()*nsample)
-      };
-
-// Probably would want to randomize the stimuli, but for the demo, setting the stimulus order and the "correct" colors:
-/*var color_study_order = {
-
-    image: [1,2,3,4], // i.e. images/stim/1.svg, iamges/stim/2.svg, etc.
-    //colIndex: [87,171,327,291],
-    // colIndex: [[87,97], [171,181], [327,337], [291,301]], // these refer to the index of the "correct" color within colors.js, the first index means the left one, the second index means the right one
-    colIndex: colIndex,
-  };
-
-  // Probably would want to randomize the stimuli, but for the demo, setting the stimulus order and the "correct" colors:
-  var color_test_order = {
-
-    image: [1,2,3,4], // i.e. images/stim/1.svg, iamges/stim/2.svg, etc.
-    //colIndex: [87,171,327,291], // these refer to the index of the "correct" color within colors.js
-    //colIndex: [[87,97], [171,181], [327,337], [291,301]],
-    colIndex: color_study_order.colIndex,
-    probLocIndex: [0,1,0,1],
-  };
-  */
-
-  var allLocY=[];
-  var allLocX=[];
-  var radiusha=200;
-  var edgeSqaure=100;
-  var minAngleDist=360/8;
-  var currMinDist = 0;
-  for (let t=0; t<trialNumber; t++) {
-    currMinDist=0;
-    while (currMinDist < minAngleDist) {
-      var sampleLocationY=[];
-      var sampleLocationX=[];
-      var sampleLocationAngle=[];
-       for (let i = 0; i < nsample; i++) {
-         sampleLocationAngle[i] = getRndInteger(1, 359);
-         sampleLocationY[i] = Math.sin(sampleLocationAngle[i]*Math.PI/180)*radiusha;
-         sampleLocationX[i] = Math.cos(sampleLocationAngle[i]*Math.PI/180)*radiusha;
-       }
-       currMinDist = getMinAngleDist(sampleLocationAngle);
-     }
-   allLocX[t]=sampleLocationX;
-   allLocY[t]=sampleLocationY;
-}
-
-  var stimuliOrder = {
-    image:[1,2,3,4],
-    allLocX: allLocX,
-    allLocY: allLocY,
-    colIndex: colIndex,
-    probLocIndex: probLocIndex,
-  }
-
-// study block stimuli
-/*var studyStim = [];
-	for (i = 0; i < color_study_order.image.length; i++) { //for each trial
-
-		studyStim[i] = {
-      stimulus: color_study_order.image[i],
-      colIndex: color_study_order.colIndex[i],
-    };
-	};
-
-// recall block stimuli
-var testStim = [];
-	for (i = 0; i < color_test_order.image.length; i++) { //for each trial within a block
-
-		testStim[i] = {
-      stimulus: color_test_order.image[i],
-      colIndex: color_test_order.colIndex[i],
-      probLocIndex: color_test_order.probLocIndex[i],
-    };
-  };
-*/
-
-var stimuliIndex =[];
-  for (let i = 0; i < trialNumber; i++) {
-    stimuliIndex[i] = {
-      stimulus: stimuliOrder.image[i],
-      colIndex: stimuliOrder.colIndex[i],
-      allLocX: stimuliOrder.allLocX[i],
-      allLocY: stimuliOrder.allLocY[i],
-      probLocIndex: stimuliOrder.probLocIndex[i],
-    }
-  }
-
-/* create timeline */
-// var timeline = [];
-
-/* Instructions for Study Task
-var instructions_study = {
-	type : 'instructions',
-	pages: ['DEMO STUDY TASK </br></br> Each image will appear one by one. Study the color of each image. You will be asked to recall the colors later.</br></br>' +
-'Ready? </br></br>'],
-show_clickable_nav: true
-
-};
-timeline.push(instructions_study);
-*/
 
 /* study trials */
 var fixationWhite = {
@@ -309,113 +180,16 @@ var fixationWhite = {
 
 }
 
-
-
-var studyBlock = {
-      type: 'snap-keyboard-response',
-      stimulus: jsPsych.timelineVariable('stimulus'),
-      colIndex: jsPsych.timelineVariable('colIndex'),
-      allLocX: jsPsych.timelineVariable('allLocX'),
-      allLocY: jsPsych.timelineVariable('allLocY'),
-      trial_duration: 100,
-      choices: jsPsych.NO_KEYS,
-      data: {
-        stimulus: jsPsych.timelineVariable('stimulus'),
-        colIndex: jsPsych.timelineVariable('colIndex'),
-        allLocX: jsPsych.timelineVariable('allLocX'),
-        allLocY: jsPsych.timelineVariable('allLocY'),
-        test_part: 'encoding',
-      }
-  };
-
-/*var study_procedure = {
-    timeline: [fixationWhite, studyBlock],
-    timeline_variables: studyStim
-
-}
-timeline.push(study_procedure);
-*/
-
-// Instructions for Recall Task
-
-/*var instructions_test = {
-	type : 'instructions',
-	pages: ['DEMO RECALL TASK </br></br>Each image will appear one by one, in white. It will be surrounded by a black circle. ' +
-  'The circle acts like a color wheel--move your cursor, and the central image will change color. When the color matches your memory, ' +
-  'click the mouse to record your guess. Try to be as accurate as possible. </br></br>' +
-'Ready? </br></br>'],
-show_clickable_nav: true
-
-}
-timeline.push(instructions_test);
-*/
-
-/* test trials
-var fixationWhite = {
-	type: 'html-keyboard-response',
-	stimulus: '<div style="font-size:60px;">+</div>',
-	data: {test_part: 'fixation'},
-	choices: jsPsych.NO_KEYS,
-	trial_duration: 1000
-
-}
-*/
-
-var delay1 ={
-  type: 'html-keyboard-response',
-	stimulus: '<div style="font-size:60px;">+</div>',
-	data: {mainExp_part: 'delay'},
-	choices: jsPsych.NO_KEYS,
-	trial_duration: 100,
-  test_part: 'delay',
-}
-
-var mask = {
-      type: 'mask-keyboard-response',
-      stimulus: jsPsych.timelineVariable('stimulus'),
-      colIndex: jsPsych.timelineVariable('colIndex'),
-      allLocX: jsPsych.timelineVariable('allLocX'),
-      allLocY: jsPsych.timelineVariable('allLocY'),
-      trial_duration: 200,
-      choices: jsPsych.NO_KEYS,
-      data: {
-        stimulus: jsPsych.timelineVariable('stimulus'),
-        colIndex: jsPsych.timelineVariable('colIndex'),
-        allLocX: jsPsych.timelineVariable('allLocX'),
-        allLocY: jsPsych.timelineVariable('allLocY'),
-        test_part: 'backward_mask',
-      }
-  };
-
-var delay2 ={
-  type: 'html-keyboard-response',
-	stimulus: '<div style="font-size:60px;">+</div>',
-	data: {mainExp_part: 'delay'},
-	choices: jsPsych.NO_KEYS,
-	trial_duration: 1200,
-  test_part: 'delay',
-}
-
-var testBlock = {
-    type: 'continuous_report',
-    stimulus: jsPsych.timelineVariable('stimulus'),
-    colIndex: jsPsych.timelineVariable('colIndex'),
-    probLocIndex: jsPsych.timelineVariable('probLocIndex'),
-    allLocX: jsPsych.timelineVariable('allLocX'),
-    allLocY: jsPsych.timelineVariable('allLocY'),
-    stim_duration: -1,
-    data: {
-      stimulus: jsPsych.timelineVariable('stimulus'),
-      colIndex: jsPsych.timelineVariable('colIndex'),
-      probLocIndex: jsPsych.timelineVariable('probLocIndex'),
-      allLocX: jsPsych.timelineVariable('allLocX'),
-      allLocY: jsPsych.timelineVariable('allLocY'),
-      test_part: 'Probe',
-    }
-};
+// var colorName = {
+//   type: jsPsychSurveyText,
+//   preamble: `<img src="img/navarro_burst_03.jpg" style="width:400px;"></img>`,
+//   questions: [
+//     {prompt: 'Pls name this color:', rows: 1}
+//   ]
+// }
 
 var test_procedure = {
-      timeline: [fixationWhite, studyBlock, delay1, mask, delay2, testBlock],
+      timeline: [fixationWhite],
       //timeline: [emotion_induction, fixationWhite, studyBlock, delay, testBlock],
 	    timeline_variables: stimuliIndex,
 

@@ -10,7 +10,7 @@ Qualtrics.SurveyEngine.addOnload(function () {
     qthis.hideNextButton();
 
     /* Change 2: Defining and load required resources */
-    var task_github = "https://bobodeligong.github.io/DoubleRecall/"; // https://<your-github-username>.github.io/<your-experiment-name>
+    var task_github = "https://mackma.github.io/MaskRecall/"; // https://<your-github-username>.github.io/<your-experiment-name>
 
     // requiredResources must include all the JS files that demo-simple-rt-task-transformed.html uses.
     var requiredResources = [
@@ -18,10 +18,9 @@ Qualtrics.SurveyEngine.addOnload(function () {
         task_github + "libraries/jquery-min.js", // if not work, mouse cannot be tracked
         task_github + "libraries/Snap.svg-0.5.1/dist/snap.svg.js",
         task_github + "plugins/jspsych-continuous-report.js",
-        task_github + "plugins/jspsych-continuous-report-double.js",
+        task_github + "plugins/jspsych-mask-keyboard-response.js",
         task_github + "plugins/jspsych-snap-keyboard-response.js",
         task_github + "plugins/jspsych-html-keyboard-response.js",
-        task_github + "plugins/jspsych-instructions.js",
         task_github + "colors.js",
         //task_github + "css/jspsych.css",
         //task_github + "css/custom.css",
@@ -54,7 +53,7 @@ Qualtrics.SurveyEngine.addOnload(function () {
         jsPsych.init({
             timeline: timeline,
             preload_images: all_images, // this speeds things up.
-            show_preload_progress_bar: false, 
+            show_preload_progress_bar: false,
             display_element: 'display_stage',
             fullscreen: true,
             on_finish: function (data) {
@@ -64,7 +63,7 @@ Qualtrics.SurveyEngine.addOnload(function () {
                     test_part: 'encoding',
                 });
                 var colIndexPresented = colIndexDisplay.select('colIndex');
- 
+
                 var delayDisplay = jsPsych.data.get().filter({
                     test_part: 'delay',
                 });
@@ -76,15 +75,15 @@ Qualtrics.SurveyEngine.addOnload(function () {
                 var firstResponseRT = firstProbeTrials.select('rt');
                 var firstResponseError = firstProbeTrials.select('responseError');
                 var firstProbeLocation = firstProbeTrials.select('probLocIndex');
-                
+
                 var secondProbeTrials = jsPsych.data.get().filter({
                     test_part: 'secondProbe',
                 });
                 var secondResponseRT = secondProbeTrials.select('rt');
                 var secondResponseError = secondProbeTrials.select('responseError');
-                
-                
-                
+
+
+
 
                 // save to qualtrics embedded data
                 Qualtrics.SurveyEngine.setEmbeddedData("colIndexPresented", colIndexPresented);

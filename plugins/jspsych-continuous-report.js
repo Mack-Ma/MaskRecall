@@ -70,7 +70,9 @@ jsPsych.plugins["continuous_report"] = (function() {
     };
 
     var stimParameters = {};
-
+    const colorWheelRadius = 300;
+    const nsample = 3;
+    const edgeSquare = 100;
     // get the image file location
     //var currStim = 'images/stim/' + trial.stimulus + '.svg';
     var currStim = 'https://bobodeligong.github.io/DoubleRecall/images/stim/1.svg';
@@ -93,15 +95,15 @@ jsPsych.plugins["continuous_report"] = (function() {
 
 
     // set the svg dimensions, to add to the innerHTML
-    var svgWidth = 600;
-    var svgHeight = 600;
+    var svgWidth = 800;
+    var svgHeight = 800;
 
     // create the svg object
     display_element.innerHTML = "<svg id='svg', width = '" + svgWidth.toString() + "', height = '" + svgWidth.toString() + "'/svg>";
 
     // set the center points (relative to the SVG)
-    var centerXSVG = svgWidth / 2,
-      centerYSVG = svgHeight / 2;
+    var centerXSVG = svgWidth / 2;
+    var centerYSVG = svgHeight / 2;
 
     var angleDeg = 0;
     var curError = 360;
@@ -111,7 +113,7 @@ jsPsych.plugins["continuous_report"] = (function() {
 
 
     // create the pointer. Here, it's set to appear at the top of the circle at the start of a trial.
-    var colPointer = paper.circle(300, 100, 15).attr({
+    var colPointer = paper.circle(centerXSVG, centerYSVG - colorWheelRadius, 15).attr({
       stroke: "black",
     });
 
@@ -140,8 +142,8 @@ jsPsych.plugins["continuous_report"] = (function() {
         currHexColor = Snap.rgb(stimParameters.col[0], stimParameters.col[1], stimParameters.col[2]);
 
         // calculate the pointer position based on SVG coordinates
-        var pointerX = Math.round(centerXSVG + Math.cos(curAngle) * 200);
-        var pointerY = Math.round(centerYSVG + Math.sin(curAngle) * 200);
+        var pointerX = Math.round(centerXSVG + Math.cos(curAngle) * colorWheelRadius);
+        var pointerY = Math.round(centerYSVG + Math.sin(curAngle) * colorWheelRadius);
         colPointer.attr({
           cx: pointerX,
           cy: pointerY,
@@ -167,13 +169,14 @@ jsPsych.plugins["continuous_report"] = (function() {
 
 
     // create the color wheel
-    var colorWheel = paper.circle(300, 300, 200).attr({
+    var colorWheel = paper.circle(centerXSVG, centerYSVG, colorWheelRadius).attr({
       stroke: "black",
       fill: "none",
       "stroke-width": 10,
-      cx: 300,
-      cy: 300,
+      cx: centerXSVG,
+      cy: centerYSVG,
     })
+
 
     /* create another rectangular
     var colorSquareTwo = paper.rect(centerXSVG+50, centerYSVG-50, 100, 100).attr({
@@ -182,8 +185,11 @@ jsPsych.plugins["continuous_report"] = (function() {
    */
 
    // randomize probe locations based on svg paper dimensions
-   var probLoc =[[centerXSVG-150, centerYSVG-50], [centerXSVG+50, centerYSVG-50]];
-
+   /*var probLoc =[[centerXSVG-150, centerYSVG-50], [centerXSVG+50, centerYSVG-50]];*/
+   var probLoc=[];
+   for (let nS = 0; nS < nsample; nS++) {
+     probLoc[nS]=[centerXSVG + trial.allLocX[nS] - edgeSquare/2, centerYSVG + trial.allLocY[nS] - edgeSquare/2];
+   }
    // var probLocIndex = Math.round(Math.random());
 
     // % set the image position based on svg paper dimensions.
@@ -192,7 +198,8 @@ jsPsych.plugins["continuous_report"] = (function() {
     // var imageY = centerYSVG - 100 / 2;
     var imageX = probLoc[trial.probLocIndex][0];
     var imageY = probLoc[trial.probLocIndex][1];
-
+/*    imageX = centerXSVG + trial.allLocX[1][0] - edgeSquare/2;
+    imageY = centerYSVG + trial.allLocY[1][1] - edgeSquare/2;*/
     // load in the images
     var g = paper.group();
 
@@ -211,14 +218,15 @@ jsPsych.plugins["continuous_report"] = (function() {
       var shape = element.select('path');
 
       $(document).mousemove(function(event) {
+/*        paper.rect(centerXSVG + trial.allLocX[trial.probLocIndex] - edgeSquare/2, centerYSVG + trial.allLocX[trial.probLocIndex] - edgeSquare/2, edgeSquare, edgeSquare).attr({
+          fill: currHexColor
+        });*/
         shape.attr({
           "fill": currHexColor
         });
-
-
       });
-
     });
+
     var startTime = new Date();
     /* Always track the mouse */
 
@@ -244,9 +252,9 @@ jsPsych.plugins["continuous_report"] = (function() {
         "yClicked": yClicked,
         "responseCol": colorResponse,
         "responseInd":trueIndex,
-        "responseError" : trueIndex - trial.colIndex[trial.probLocIndex], 
-        "correctCol": originalColorWheel[trial.colIndex[trial.probLocIndex]], 
-        "correctColIndex": trial.colIndex[trial.probLocIndex], 
+        "responseError" : trueIndex - trial.colIndex[trial.probLocIndex],
+        "correctCol": originalColorWheel[trial.colIndex[trial.probLocIndex]],
+        "correctColIndex": trial.colIndex[trial.probLocIndex],
       };
 
       $(document).unbind("click.trialResponse")

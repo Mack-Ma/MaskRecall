@@ -10,7 +10,7 @@
 
         <!-- load the jspsych custom plugins.   -->
         <script src="plugins/jspsych-continuous-report.js"></script>
-        <script src="plugins/jspsych-continuous-report-double.js"></script>
+        <script src="plugins/jspsych-mask-keyboard-response.js"></script>
         <script src="plugins/jspsych-snap-keyboard-response.js"></script>
 
         <!-- load other jspsych plugins used in this demo.   -->
@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="css/custom.css" type="text/css" />
 
         <!-- load main task -->
-        <script src="task-main.js"></script>
+        <script src="task-main0.js"></script>
 
        </head>
 
@@ -41,7 +41,7 @@
 	jsPsych.init({
 		timeline: timeline,
 		preload_images: all_images, // this speeds things up.
-	  show_preload_progress_bar: false, 
+	  show_preload_progress_bar: false,
 		on_finish: function() {
        jsPsych.data.displayData(); // if you want to display the data at the end for debugging purposes.
     }
