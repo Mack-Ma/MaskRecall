@@ -234,7 +234,7 @@ var stimuliIndexPrac =[];
             colIndex: jsPsych.timelineVariable('colIndex'),
             allLocX: jsPsych.timelineVariable('allLocX'),
             allLocY: jsPsych.timelineVariable('allLocY'),
-            trial_duration: 200,
+            trial_duration: 0,
             choices: jsPsych.NO_KEYS,
             data: {
               stimulus: jsPsych.timelineVariable('stimulus'),
@@ -250,7 +250,7 @@ var stimuliIndexPrac =[];
         stimulus: '<div style="font-size:60px;">+</div>',
         data: {mainExp_part: 'delay'},
         choices: jsPsych.NO_KEYS,
-        trial_duration: 1200,
+        trial_duration: 1700,
         test_part: 'delay',
       }
 
