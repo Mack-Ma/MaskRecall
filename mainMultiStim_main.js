@@ -10,7 +10,4 @@ var timeline = [];
         trial_duration: 2000
  }
 timeline.push(study);
-
-
-
-
+hqwe

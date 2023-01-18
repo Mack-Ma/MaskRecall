@@ -130,7 +130,7 @@ jsPsych.plugins["mask-keyboard-response"] = (function() {
         sampleLocationX[i] = trial.allLocX[i];
       };
 
-      var colorIDList=Array(360).fill().map((element, index) => index+0)
+      var colorIDList=Array(180).fill().map((element, index) => index+0)
 
       function getRandomSubarray(arr, size) {
           var shuffled = arr.slice(0), i = arr.length, temp, index;
@@ -146,8 +146,10 @@ jsPsych.plugins["mask-keyboard-response"] = (function() {
       function get4Angle(ang){
         var ang_all=[];
           for (let ii=0; ii<4; ii++) {
-            ang_all[ii]=ang+90*ii+Math.floor(Math.random()*20)-10;
-            if (ang_all[ii]>359) {ang_all[ii]=ang_all[ii]-360;}
+            ang_all[ii]=ang+45*ii+Math.floor(Math.random()*10)-5;
+            ang_all[ii]=Math.floor(ang_all[ii]);
+            if (ang_all[ii]>179) {ang_all[ii]=ang_all[ii]-180;}
+            if (ang_all[ii]<0) {ang_all[ii]=ang_all[ii]+180;}
           }
         return ang_all
       }
@@ -171,7 +173,7 @@ jsPsych.plugins["mask-keyboard-response"] = (function() {
       var sampleMaskColor=[];
       for (let i = 0; i < nsample; i++) {
         /*const curRGBsample = getRandomSubarray(colorIDList, 4)*/
-        const curRGBfirst=Math.floor(Math.random()*359)
+        const curRGBfirst=Math.floor(Math.random()*179)
         const curRGBsample=get4Angle(curRGBfirst);
         for (let j = 0; j < 4; j++) {
           sampleMaskColor = colors.colors[curRGBsample[j]];

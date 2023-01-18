@@ -411,3 +411,9 @@ for (let i = 0; i < nsample; i++) {
   }
 
 };
+
+var x = 10;
+var y = 20;
+var sum = x + y;
+var a=[100,200]/2
+console.log(a); // Prints: 30

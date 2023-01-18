@@ -84,7 +84,7 @@ jsPsych.plugins["continuous_report"] = (function() {
     }
 
     // randomize the color wheel for this trial:
-    var randomColorVal = getRndInteger(1, 359); //359 because that's the 360th element, since it starts at 0.
+    var randomColorVal = getRndInteger(1, 179); //359 because that's the 360th element, since it starts at 0.
     originalColorWheel = colors.colors;
     // step 1: slice at this number
     var colorsFirstHalf = originalColorWheel.slice(randomColorVal, originalColorWheel.length);
@@ -162,7 +162,7 @@ jsPsych.plugins["continuous_report"] = (function() {
       angleDeg = (angleDeg < 0) ? angleDeg + 360 : angleDeg;
 
       // change this to an image color
-      var imgCol = Math.floor(angleDeg);
+      var imgCol = Math.floor(angleDeg/2);
       return [imgCol, curAngle];
 
     }
