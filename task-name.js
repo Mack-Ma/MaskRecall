@@ -173,7 +173,7 @@ timeline.push(test_procedure);
   var exp_end = {
     type: 'instructions',
     pages: [
-        'Hahahahaha Done!'
+        'Hahahahaha Done! </br></br> Please contact the experimenter.'
       ],
     show_clickable_nav: true
   };

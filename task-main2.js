@@ -3,9 +3,9 @@
 // Edited by Tianye Ma, CONPAM lab, UCR
 
 // Prologue
-var trialNumberInst = 2; // number of trials for instruction
-var trialNumberPrac = 10; // number of trials for practice
-var trialNumber = 50; // number of trials for each experiment block
+var trialNumberInst = 1; // number of trials for instruction
+var trialNumberPrac = 1; // number of trials for practice
+var trialNumber = 60; // number of trials for each experiment block
 var nsample = 3; // number of color squares. DONT CHANGE THIS
 
 // define the site that hosts stimuli images
@@ -317,7 +317,7 @@ var stimuliIndexPrac =[];
       	stimulus: '<div style="font-size:60px;">+</div>',
       	data: {mainExp_part: 'delay'},
       	choices: jsPsych.NO_KEYS,
-      	trial_duration: 100,
+      	trial_duration: 300,
         test_part: 'delay',
       }
 
@@ -327,7 +327,7 @@ var stimuliIndexPrac =[];
             colIndex: jsPsych.timelineVariable('colIndex'),
             allLocX: jsPsych.timelineVariable('allLocX'),
             allLocY: jsPsych.timelineVariable('allLocY'),
-            trial_duration: 200,
+            trial_duration: 0,
             choices: jsPsych.NO_KEYS,
             data: {
               stimulus: jsPsych.timelineVariable('stimulus'),
@@ -366,7 +366,7 @@ var stimuliIndexPrac =[];
       };
 
       var prac_procedure = {
-            timeline: [fixationWhitePrac, studyBlockPrac, delay1Prac, maskPrac, delay2Prac, testBlockPrac],
+            timeline: [fixationWhitePrac, studyBlockPrac, delay1Prac, delay2Prac, testBlockPrac],
             //timeline: [emotion_induction, fixationWhite, studyBlock, delay, testBlock],
       	    timeline_variables: stimuliIndexPrac,
 
@@ -493,7 +493,7 @@ var delay1 ={
 	stimulus: '<div style="font-size:60px;">+</div>',
 	data: {mainExp_part: 'delay'},
 	choices: jsPsych.NO_KEYS,
-	trial_duration: 100,
+	trial_duration: 300,
   test_part: 'delay',
 }
 
@@ -503,7 +503,7 @@ var mask = {
       colIndex: jsPsych.timelineVariable('colIndex'),
       allLocX: jsPsych.timelineVariable('allLocX'),
       allLocY: jsPsych.timelineVariable('allLocY'),
-      trial_duration: 200,
+      trial_duration: 0,
       choices: jsPsych.NO_KEYS,
       data: {
         stimulus: jsPsych.timelineVariable('stimulus'),
@@ -542,7 +542,7 @@ var testBlock = {
 };
 
 var test_procedure = {
-      timeline: [fixationWhite, studyBlock, delay1, mask, delay2, testBlock],
+      timeline: [fixationWhite, studyBlock, delay1, delay2, testBlock],
       //timeline: [emotion_induction, fixationWhite, studyBlock, delay, testBlock],
 	    timeline_variables: stimuliIndex,
 
@@ -553,7 +553,7 @@ timeline.push(test_procedure);
   var exp_end = {
     type: 'instructions',
     pages: [
-        'Hahahahaha Done! Congrats! </br></br>'
+        'Hahahahaha Done! </br></br> Please contact the experimenter.'
       ],
     show_clickable_nav: true
   };

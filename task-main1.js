@@ -5,7 +5,7 @@
 // Prologue
 var trialNumberInst = 2; // number of trials for instruction
 var trialNumberPrac = 10; // number of trials for practice
-var trialNumber = 50; // number of trials for each experiment block
+var trialNumber = 60; // number of trials for each experiment block
 var nsample = 3; // number of color squares. DONT CHANGE THIS
 
 // define the site that hosts stimuli images
@@ -553,7 +553,7 @@ timeline.push(test_procedure);
   var exp_end = {
     type: 'instructions',
     pages: [
-        'Hahahahaha Done! Congrats! </br></br>'
+        'Hahahahaha Done! </br></br> Please contact the experimenter.'
       ],
     show_clickable_nav: true
   };

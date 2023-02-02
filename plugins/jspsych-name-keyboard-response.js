@@ -109,7 +109,7 @@ jsPsych.plugins["name-keyboard-response"] = (function() {
         var relY = yPos - centerYSVG;
         var nameWhich = -1;
         if (relX > 200 && Math.abs(relY) < 400){
-          nameWhich = Math.floor((relY+270)/80)-1;
+          nameWhich = Math.floor((relY+360)/80)-1;
         }
         return nameWhich;
 
